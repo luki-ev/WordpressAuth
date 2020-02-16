@@ -85,8 +85,8 @@ class sspmod_wordpressauth_Auth_Source_WordpressAuth extends SimpleSAML\Module\c
 
         /* Create the attribute array of the user. */
         $attributes = array(
-            'uid' => array($username),
-            'username' => array($username),
+            'uid' => array($row['user_login']),
+            'username' => array($row['user_login']),
             'name' => array($row['display_name']), 
             'displayName' => array($row['display_name']),
             'email' => array($row['user_email']),
