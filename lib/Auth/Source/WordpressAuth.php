@@ -57,7 +57,7 @@ class sspmod_wordpressauth_Auth_Source_WordpressAuth extends SimpleSAML\Module\c
         $row = $st->fetch(PDO::FETCH_ASSOC);
         if (!$row) {
             /* User not found. */
-            throw new SimpleSAML_Error_Error('WRONGUSERPASS');
+            throw new SimpleSAML\Error\Error('WRONGUSERPASS');
         }
 
         /* Load the Portable PHP password hashing framework */
@@ -67,7 +67,7 @@ class sspmod_wordpressauth_Auth_Source_WordpressAuth extends SimpleSAML\Module\c
         /* Check the password against the hash in Wordpress wp_users table */
         if (!$hasher->CheckPassword($password, $row['user_pass'])){
             /* Invalid password. */
-            throw new SimpleSAML_Error_Error('WRONGUSERPASS');
+            throw new SimpleSAML\Error\Error('WRONGUSERPASS');
         }
 
         /* Load the roles */
@@ -80,7 +80,7 @@ class sspmod_wordpressauth_Auth_Source_WordpressAuth extends SimpleSAML\Module\c
         $rowmeta = $stmeta->fetch(PDO::FETCH_ASSOC);
         if (!$rowmeta) {
             /* User Metadata not found, treat as User not found */
-            throw new SimpleSAML_Error_Error('WRONGUSERPASS');
+            throw new SimpleSAML\Error\Error('WRONGUSERPASS');
         }
 
         /* Create the attribute array of the user. */
