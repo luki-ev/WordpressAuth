@@ -61,11 +61,10 @@ class sspmod_wordpressauth_Auth_Source_WordpressAuth extends SimpleSAML\Module\c
         }
 
         /* Load the Portable PHP password hashing framework */
-        require_once( dirname(__FILE__).'/../../../vendor/PasswordHash.php' );
-        $hasher = new PasswordHash(8, TRUE);
+        require_once( __DIR__.'/../../../vendor/wp-check-password.php' );
 
         /* Check the password against the hash in Wordpress wp_users table */
-        if (!$hasher->CheckPassword($password, $row['user_pass'])){
+        if (!wp_check_password($password, $row['user_pass'])){
             /* Invalid password. */
             throw new SimpleSAML\Error\Error('WRONGUSERPASS');
         }
@@ -87,7 +86,7 @@ class sspmod_wordpressauth_Auth_Source_WordpressAuth extends SimpleSAML\Module\c
         $attributes = array(
             'uid' => array($row['user_login']),
             'username' => array($row['user_login']),
-            'name' => array($row['display_name']), 
+            'name' => array($row['display_name']),
             'displayName' => array($row['display_name']),
             'email' => array($row['user_email']),
             'isMemberOf' => array_keys(unserialize($rowmeta['meta_value'])),
