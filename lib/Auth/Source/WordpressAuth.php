@@ -64,7 +64,8 @@ class sspmod_wordpressauth_Auth_Source_WordpressAuth extends SimpleSAML\Module\c
         require_once( __DIR__.'/../../../vendor/wp-check-password.php' );
 
         /* Check the password against the hash in Wordpress wp_users table */
-        if (!wp_check_password($password, $row['user_pass'])){
+        // Quotes need to be escaped with addslashes() https://core.trac.wordpress.org/ticket/34297
+        if (!wp_check_password(addslashes($password), $row['user_pass'])){
             /* Invalid password. */
             throw new SimpleSAML\Error\Error('WRONGUSERPASS');
         }
